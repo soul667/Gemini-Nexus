@@ -2,6 +2,7 @@ import {
     DEFAULT_OFFICIAL_MODEL,
     DEFAULT_OPENAI_MODEL,
     DEFAULT_PROVIDER,
+    getOfficialModelLabel,
 } from '../../shared/config/constants.js';
 import {
     getDedicatedApiDefaultModel,
@@ -28,8 +29,13 @@ export function createModelOptions(settings) {
     if (provider === 'official') {
         const models = parseConfiguredModels(settings.officialModel);
         return models.length > 0
-            ? models.map((model) => ({ value: model, label: model }))
-            : [{ value: DEFAULT_OFFICIAL_MODEL, label: DEFAULT_OFFICIAL_MODEL }];
+            ? models.map((model) => ({ value: model, label: getOfficialModelLabel(model) }))
+            : [
+                  {
+                      value: DEFAULT_OFFICIAL_MODEL,
+                      label: getOfficialModelLabel(DEFAULT_OFFICIAL_MODEL),
+                  },
+              ];
     }
 
     if (provider === 'openai') {

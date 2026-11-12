@@ -109,7 +109,10 @@
             .filter(Boolean);
 
         if (modelIds.length === 0) return [fallbackOption];
-        return modelIds.map((modelId) => ({ value: modelId, label: modelId }));
+        return modelIds.map((modelId) => ({
+            value: modelId,
+            label: getConfig().getOfficialModelLabel?.(modelId) || modelId,
+        }));
     }
 
     class ToolbarUI {
@@ -491,7 +494,9 @@
                 const defaultOfficialModel = getDefaultOfficialModel();
                 options = createCustomModelOptions(settings.officialModel, {
                     value: defaultOfficialModel,
-                    label: defaultOfficialModel,
+                    label:
+                        getConfig().getOfficialModelLabel?.(defaultOfficialModel) ||
+                        defaultOfficialModel,
                 });
             } else if (provider === 'openai') {
                 options = createCustomModelOptions(settings.openaiModel, {

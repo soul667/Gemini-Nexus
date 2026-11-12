@@ -68,5 +68,6 @@ describe('web thinking helpers', () => {
         expect(supportsWebThinking('gemini-3-flash-thinking')).toBe(false);
         expect(supportsWebThinking('gemini-3-flash')).toBe(false);
         expect(supportsWebThinking('gpt-5')).toBe(false);
+        expect(supportsWebThinking('gemini-4-carbon')).toBe(false);
     });
 });

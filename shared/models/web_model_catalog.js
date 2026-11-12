@@ -2,6 +2,8 @@
     // Web model hashes verified against Gemini Web reverse catalogs (Gemi2Api-Server 2026-07-22
     // custom_models examples + free/Plus otAQ7b mode ids) and live Gemini Web requests.
     // Labels follow the public GA lineup.
+    // Gemini 4 Carbon (`gemini-4-carbon`) is an Official API model. No public Gemini Web
+    // hash was verified, so it is intentionally absent from this catalog.
     const DEFAULT_WEB_MODEL = '56fdd199312815e2';
 
     const WEB_MODEL_OPTIONS = Object.freeze(

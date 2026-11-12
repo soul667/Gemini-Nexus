@@ -60,5 +60,6 @@ describe('web model metadata', () => {
         expect(getWebModelHeaderConfig('gemini-3-flash')).toBeNull();
         expect(getWebModelHeaderConfig('gemini-3.5-flash')).toBeNull();
         expect(getWebModelHeaderConfig('gemini-3.1-flash-lite')).toBeNull();
+        expect(getWebModelHeaderConfig('gemini-4-carbon')).toBeNull();
     });
 });

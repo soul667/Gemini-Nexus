@@ -156,6 +156,93 @@ describe('extractOfficialResponseData', () => {
         expect(url).toContain('/models/gemini-3.8-flash:streamGenerateContent');
     });
 
+    it('sends Gemini 4 Carbon with its documented thinking levels', async () => {
+        global.fetch = vi.fn().mockResolvedValue({
+            ok: true,
+            body: makeSseStream('done'),
+        });
+
+        await sendOfficialMessage(
+            'Hello',
+            '',
+            [],
+            {
+                baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
+                apiKey: 'key',
+                model: 'gemini-4-carbon',
+            },
+            'high',
+            [],
+            false,
+            null,
+            vi.fn()
+        );
+
+        const [url, init] = global.fetch.mock.calls[0];
+        const payload = JSON.parse(init.body);
+        expect(url).toContain('/models/gemini-4-carbon:streamGenerateContent');
+        expect(payload.generationConfig.thinkingConfig).toEqual({
+            includeThoughts: true,
+            thinkingLevel: 'high',
+        });
+    });
+
+    it('maps the Flash-only minimal thinking level to low for Gemini 4 Carbon and Argon', async () => {
+        global.fetch = vi.fn().mockResolvedValue({
+            ok: true,
+            body: makeSseStream('done'),
+        });
+
+        const baseConfig = {
+            baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
+            apiKey: 'key',
+        };
+
+        await sendOfficialMessage(
+            'Hello',
+            '',
+            [],
+            { ...baseConfig, model: 'gemini-4-carbon' },
+            'minimal',
+            [],
+            false,
+            null,
+            vi.fn()
+        );
+        await sendOfficialMessage(
+            'Hello',
+            '',
+            [],
+            { ...baseConfig, model: 'gemini-4-argon' },
+            'minimal',
+            [],
+            false,
+            null,
+            vi.fn()
+        );
+        await sendOfficialMessage(
+            'Hello',
+            '',
+            [],
+            { ...baseConfig, model: 'gemini-4-carbon' },
+            'medium',
+            [],
+            false,
+            null,
+            vi.fn()
+        );
+
+        const carbonMinimal = JSON.parse(global.fetch.mock.calls[0][1].body);
+        const argonMinimal = JSON.parse(global.fetch.mock.calls[1][1].body);
+        const carbonMedium = JSON.parse(global.fetch.mock.calls[2][1].body);
+        expect(carbonMinimal.generationConfig.thinkingConfig.thinkingLevel).toBe('low');
+        expect(argonMinimal.generationConfig.thinkingConfig.thinkingLevel).toBe('low');
+        expect(carbonMedium.generationConfig.thinkingConfig.thinkingLevel).toBe('medium');
+        expect(global.fetch.mock.calls[1][0]).toContain(
+            '/models/gemini-4-argon:streamGenerateContent'
+        );
+    });
+
     it('sends the requested thinking level to official models', async () => {
         global.fetch = vi.fn().mockResolvedValue({
             ok: true,
