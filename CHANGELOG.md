@@ -1,5 +1,16 @@
 # Changelog
 
+## v5.7.0 - 2026-11-12
+
+### Models
+
+- **Gemini 4 Carbon 适配**：官方 Gemini API 默认模型列表加入 **Gemini 4 Carbon**（`gemini-4-carbon`），侧栏与划词工具栏模型选择器显示为 “Gemini 4 Carbon”。思考等级与 Gemini 4 Argon 相同，请求沿用 `generationConfig.thinkingConfig.thinkingLevel` 的 `low` / `medium` / `high`；若当前设置为 Flash 的 `minimal`，Carbon 与 Argon 会改发 `low`。默认选中模型仍是 `gemini-3.8-flash`。该模型仅在 Gemini API 付费档与 Google AI Studio 提供。
+- **Gemini Web**：公开资料没有可核对的 Gemini Web 内部模型 hash，Web 目录不加入 Carbon。在 Web 渠道传入 `gemini-4-carbon` 会按未知模型拒绝。已保存的官方 Model IDs 不会自动改写，需要在列表中加入 `gemini-4-carbon` 后才能选中。
+
+### Chore
+
+- 版本号升级至 `5.7.0`。
+
 ## v5.6.0 - 2026-10-15
 
 ### Features

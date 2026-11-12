@@ -148,6 +148,22 @@ function normalizeOfficialModel(model) {
     return normalizeOfficialModelId(model);
 }
 
+// Gemini 4 Carbon and Argon accept low, medium, and high. `minimal` is a Flash
+// level and is not in their documented set, so the Official API request uses low.
+const GEMINI_4_FRONTIER_MODEL_IDS = new Set(['gemini-4-argon', 'gemini-4-carbon']);
+
+function resolveOfficialThinkingLevel(model, thinkingLevel) {
+    if (!thinkingLevel) return thinkingLevel;
+    const level = String(thinkingLevel).trim().toLowerCase();
+    const modelId = String(model || '')
+        .trim()
+        .toLowerCase();
+    if (GEMINI_4_FRONTIER_MODEL_IDS.has(modelId) && level === 'minimal') {
+        return 'low';
+    }
+    return thinkingLevel;
+}
+
 export function extractOfficialResponseData(candidate) {
     const modelParts = [];
     const functionCalls = [];
@@ -277,10 +293,11 @@ export async function sendOfficialMessage(
 
     // Apply Thinking Config if requested or user has configured it level
     // Specifically enable thinking for "Thinking" model variant
-    if (thinkingLevel) {
+    const resolvedThinkingLevel = resolveOfficialThinkingLevel(targetModel, thinkingLevel);
+    if (resolvedThinkingLevel) {
         payload.generationConfig.thinkingConfig = {
             includeThoughts: true, // Ensure thoughts are returned in response
-            thinkingLevel,
+            thinkingLevel: resolvedThinkingLevel,
         };
     }
 

@@ -19,6 +19,7 @@ export const DEFAULT_PROVIDER = config.DEFAULT_PROVIDER;
 export const DEFAULT_STORED_GEMINI_MODEL = config.DEFAULT_STORED_GEMINI_MODEL;
 export const DEFAULT_OFFICIAL_MODEL = config.DEFAULT_OFFICIAL_MODEL;
 export const DEFAULT_OFFICIAL_MODELS = config.DEFAULT_OFFICIAL_MODELS;
+export const getOfficialModelLabel = (model) => config.getOfficialModelLabel(model);
 export const DEFAULT_OFFICIAL_BASE_URL = config.DEFAULT_OFFICIAL_BASE_URL;
 export const DEFAULT_OPENAI_MODEL = config.DEFAULT_OPENAI_MODEL;
 export const DEFAULT_THINKING_LEVEL = config.DEFAULT_THINKING_LEVEL;

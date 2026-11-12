@@ -171,7 +171,15 @@
         DEFAULT_PROVIDER: 'web',
         DEFAULT_STORED_GEMINI_MODEL: '56fdd199312815e2',
         DEFAULT_OFFICIAL_MODEL: 'gemini-3.8-flash',
-        DEFAULT_OFFICIAL_MODELS: 'gemini-3.8-flash, gemini-3.5-flash-lite',
+        DEFAULT_OFFICIAL_MODELS: 'gemini-3.8-flash, gemini-3.5-flash-lite, gemini-4-carbon',
+        // Display names for Official API ids. Unknown ids stay as the raw model id.
+        OFFICIAL_MODEL_LABELS: Object.freeze({
+            'gemini-4-carbon': 'Gemini 4 Carbon',
+        }),
+        getOfficialModelLabel(model) {
+            const modelId = String(model || '').trim();
+            return this.OFFICIAL_MODEL_LABELS[modelId] || modelId;
+        },
         DEFAULT_OFFICIAL_BASE_URL: 'https://generativelanguage.googleapis.com/v1beta',
         DEFAULT_OPENAI_MODEL: 'openai_custom',
         DEFAULT_THINKING_LEVEL: 'low',

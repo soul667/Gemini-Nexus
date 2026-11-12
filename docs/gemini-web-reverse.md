@@ -24,6 +24,7 @@ Not claimed as complete:
 - Native Gemini Web `ProcessFile` flow. The live app still registers `ProcessFile` (`LbusCb`) and may use it for PDF/text/document paths, but Gemini Nexus currently uploads image attachments through `https://push.clients6.google.com/upload/` and rejects non-image attachments for the Web provider.
 - Removed image-preview model routing. `gemini-3.1-flash-image-preview` and `gemini-3-pro-image-preview-11-2025` are intentionally rejected by the Web provider until their current Web request contract is revalidated.
 - Native three-id Web conversation continuation. Local history is folded into the prompt because the live Web client rejects the old three-id continuation payload without extra UI-only context.
+- Gemini 4 Carbon (`gemini-4-carbon`) on the Web provider. Google documents this model for the paid Gemini API and AI Studio, with thinking levels `low`, `medium` (default), and `high`. No public Gemini Web model hash was verified, so the Web catalog does not list it. Select `gemini-4-carbon` on the Official API provider. An unknown Web model id, including `gemini-4-carbon`, is rejected.
 
 ## Page Tokens
 
